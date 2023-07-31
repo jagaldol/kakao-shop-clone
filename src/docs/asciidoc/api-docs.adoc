@@ -1,5 +1,8 @@
 = 카카오 쇼핑하기 RestAPI
-Metacoding <getinthere@naver.com>
+jagaldol <jagaldol.dev@gmail.com>
+:toc: left
+:toclevels: 2
+:source-highlighter: highlight.js
 
 ifndef::snippets[]
 :snippets: ./build/generated-snippets
@@ -8,9 +11,6 @@ endif::[]
 :product: product-rest-controller-test
 :cart: cart-rest-controller-test
 
-:toc: left
-:toclevels: 2
-:source-highlighter: highlightjs
 
 == 상품
 
