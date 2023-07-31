@@ -1,6 +1,6 @@
 package com.example.kakao.product;
 
-import com.example.kakao.MyRestDoc;
+import com.example.kakao.MyRestDocTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql("classpath:db/teardown.sql")
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class ProductRestControllerTest extends MyRestDoc {
+public class ProductRestControllerTest extends MyRestDocTest {
 
     @Test
     public void findAll_test() throws Exception {

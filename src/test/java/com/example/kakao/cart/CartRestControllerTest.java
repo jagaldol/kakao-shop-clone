@@ -1,6 +1,6 @@
 package com.example.kakao.cart;
 
-import com.example.kakao.MyRestDoc;
+import com.example.kakao.MyRestDocTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(value = "classpath:db/teardown.sql")
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class CartRestControllerTest extends MyRestDoc {
+public class CartRestControllerTest extends MyRestDocTest {
     @Autowired
     private ObjectMapper om;
 

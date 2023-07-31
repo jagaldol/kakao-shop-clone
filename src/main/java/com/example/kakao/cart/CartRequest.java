@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 public class CartRequest {
 
@@ -12,7 +13,7 @@ public class CartRequest {
     public static class SaveDTO {
         @NotNull
         private int optionId;
-        @NotNull
+        @NotNull @Positive
         private int quantity;
     }
 
@@ -20,7 +21,7 @@ public class CartRequest {
     public static class UpdateDTO {
         @NotNull
         private int cartId;
-        @NotNull
+        @NotNull @Positive
         private int quantity;
     }
 }

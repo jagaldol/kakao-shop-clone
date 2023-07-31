@@ -16,7 +16,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import java.nio.charset.StandardCharsets;
 
 @ExtendWith({ SpringExtension.class, RestDocumentationExtension.class })
-public class MyRestDoc {
+public class MyRestDocTest {
     protected MockMvc mvc;
     protected RestDocumentationResultHandler document;
 
