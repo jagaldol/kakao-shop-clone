@@ -1,14 +1,22 @@
 package com.example.kakao.product;
 
 import com.example.kakao.MyRestDocTest;
+import com.example.kakao._core.errors.exception.Exception404;
+import com.example.kakao.product.option.Option;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -65,5 +73,28 @@ public class ProductRestControllerTest extends MyRestDocTest {
         resultActions.andExpect(jsonPath("$.response.image").value("/images/1.jpg"));
         resultActions.andExpect(jsonPath("$.response.price").value(1000));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @Test
+    void findById_fail_test() throws Exception {
+        // given
+        int id = 150;
+
+
+
+        // when
+        ResultActions result = mvc.perform(MockMvcRequestBuilders
+                .get("/products/" + id));
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+        result.andDo(MockMvcResultHandlers.print());
+
+        // then
+        result.andExpectAll(
+                jsonPath("$.success").value(false),
+                jsonPath("$.response").isEmpty(),
+                jsonPath("$.error.message").value("해당 상품을 찾을 수 없습니다:"+id),
+                jsonPath("$.error.status").value(404)
+        );
     }
 }
