@@ -5,12 +5,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -27,7 +30,8 @@ public class ProductRestControllerTest extends MyRestDocTest {
 
         // when
         ResultActions resultActions = mvc.perform(
-                get("/products")
+                RestDocumentationRequestBuilders.get("/products")
+                        .param("page", String.valueOf(0))
         );
 
         // console
@@ -41,7 +45,11 @@ public class ProductRestControllerTest extends MyRestDocTest {
         resultActions.andExpect(jsonPath("$.response[0].description").value(""));
         resultActions.andExpect(jsonPath("$.response[0].image").value("/images/1.jpg"));
         resultActions.andExpect(jsonPath("$.response[0].price").value(1000));
-        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document.document(
+                RequestDocumentation.requestParameters(
+                        parameterWithName("page").description("첫 페이지는 0(default: 0)")
+                )
+        ));
     }
 
     @Test
@@ -72,8 +80,6 @@ public class ProductRestControllerTest extends MyRestDocTest {
     void findById_fail_test() throws Exception {
         // given
         int id = 150;
-
-
 
         // when
         ResultActions result = mvc.perform(MockMvcRequestBuilders

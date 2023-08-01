@@ -9,20 +9,27 @@ ifndef::snippets[]
 endif::[]
 
 :product: product-rest-controller-test
+:user: user-rest-controller-test
 :cart: cart-rest-controller-test
+:order: order-rest-controller-test
+
 
 
 == 상품
 
 === 전체 상품 목록 조회
-* param : page={number}
-* param의 디폴트 값은 0이다.
+
+페이지 별로 상품 목록 조회 가능 페이지 당 9개의 상품이 리턴 된다.
+
+==== 쿼리 스트링
+include::{snippets}/{product}/find-all_test/request-parameters.adoc[]
+
 
 ==== 요청 예시
 include::{snippets}/{product}/find-all_test/http-request.adoc[]
 
 ==== 응답 예시
-include::{snippets}/{product}/find-all_test/response-body.adoc[]
+include::{snippets}/{product}/find-all_test/http-response.adoc[]
 
 === 개별 상품 상세 조회
 
@@ -30,7 +37,35 @@ include::{snippets}/{product}/find-all_test/response-body.adoc[]
 include::{snippets}/{product}/find-by-id_test/http-request.adoc[]
 
 ==== 응답 예시
-include::{snippets}/{product}/find-by-id_test/response-body.adoc[]
+include::{snippets}/{product}/find-by-id_test/http-response.adoc[]
+
+=== 개별 상품 상세 조회 - 없는 상품 조회 시
+
+존재 하지 않는 상품 번호로의 요청
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_fail_test/http-response.adoc[]
+
+== 회원
+
+=== 회원가입
+
+==== 요청 예시
+include::{snippets}/{user}/join_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_test/http-response.adoc[]
+
+=== 로그인
+
+==== 요청 예시
+include::{snippets}/{user}/login_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login_test/http-response.adoc[]
 
 == 장바구니
 
@@ -40,7 +75,7 @@ include::{snippets}/{product}/find-by-id_test/response-body.adoc[]
 include::{snippets}/{cart}/add-cart-list_test/http-request.adoc[]
 
 ==== 응답 예시
-include::{snippets}/{cart}/add-cart-list_test/response-body.adoc[]
+include::{snippets}/{cart}/add-cart-list_test/http-response.adoc[]
 
 === 장바구니 조회
 
@@ -48,7 +83,7 @@ include::{snippets}/{cart}/add-cart-list_test/response-body.adoc[]
 include::{snippets}/{cart}/find-all_test/http-request.adoc[]
 
 ==== 응답 예시
-include::{snippets}/{cart}/find-all_test/response-body.adoc[]
+include::{snippets}/{cart}/find-all_test/http-response.adoc[]
 
 === 장바구니 수정
 * 주문하기를 할 때 장바구니 데이터를 update하고 그 결과를 응답받는다.
@@ -58,4 +93,4 @@ include::{snippets}/{cart}/find-all_test/response-body.adoc[]
 include::{snippets}/{cart}/update_test/http-request.adoc[]
 
 ==== 응답 예시
-include::{snippets}/{cart}/update_test/response-body.adoc[]
+include::{snippets}/{cart}/update_test/http-response.adoc[]
