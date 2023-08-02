@@ -85,6 +85,25 @@ public class CartRestControllerTest extends MyRestDocTest {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+
+    @Test
+    public void findAllNotAuthorization_test() throws Exception {
+        // given teardown
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/carts")
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.status").value(401));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test
     public void update_test() throws Exception {
