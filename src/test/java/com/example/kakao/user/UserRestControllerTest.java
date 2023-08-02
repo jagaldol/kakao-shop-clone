@@ -14,7 +14,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
 @AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
@@ -49,6 +53,56 @@ public class UserRestControllerTest extends MyRestDocTest {
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+    }
+
+    @Test
+    public void join_fail_400_test() throws Exception {
+        // given
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setEmail("test");
+        requestDTO.setPassword("test1234!");
+        requestDTO.setUsername("test_test");
+        String requestBody = om.writeValueAsString(requestDTO);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/join")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(jsonPath("$.success").value("false"));
+        result.andExpect(jsonPath("$.error.status").value(400));
+    }
+
+    @Test
+    public void join_fail_exist_email_test() throws Exception {
+        // given
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setEmail("ssarmango@nate.com");
+        requestDTO.setPassword("test1234!");
+        requestDTO.setUsername("test_test");
+        String requestBody = om.writeValueAsString(requestDTO);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/join")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(jsonPath("$.success").value("false"));
+        result.andExpect(jsonPath("$.error.status").value(400));
     }
 
     @Test
