@@ -130,4 +130,50 @@ public class UserRestControllerTest extends MyRestDocTest {
         Assertions.assertNotNull(responseHeader);
         Assertions.assertTrue(responseHeader.startsWith(JWTProvider.TOKEN_PREFIX));
     }
+
+    @Test
+    public void login_fail_400_test() throws Exception  {
+        // given
+        UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+        loginDTO.setEmail("ssarmango@nate.com");
+        loginDTO.setPassword("meta1234");
+        String requestBody = om.writeValueAsString(loginDTO);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/login")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(400));
+    }
+
+    @Test
+    public void login_fail_test() throws Exception  {
+        // given
+        UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+        loginDTO.setEmail("ssarmango@nate.com");
+        loginDTO.setPassword("meta1234!!");
+        String requestBody = om.writeValueAsString(loginDTO);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/login")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(400));
+    }
 }
