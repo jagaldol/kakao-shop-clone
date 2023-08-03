@@ -13,7 +13,7 @@ public class CartRequest {
     public static class SaveDTO {
         @NotNull
         private int optionId;
-        @NotNull @Positive
+        @NotNull @Positive(message = "수량은 양수여야합니다.")
         private int quantity;
     }
 
@@ -21,7 +21,7 @@ public class CartRequest {
     public static class UpdateDTO {
         @NotNull
         private int cartId;
-        @NotNull @Positive
+        @NotNull @Positive(message = "수량은 양수여야합니다.")
         private int quantity;
     }
 }

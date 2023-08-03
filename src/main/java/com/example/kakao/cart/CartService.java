@@ -73,11 +73,11 @@ public class CartService {
         if (cartList.isEmpty()) throw new Exception404("사용자의 장바구니가 존재하지 않습니다.");
 
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
-        List<Integer> requestOptionIds = requestDTOs.stream()
+        List<Integer> requestCartIds = requestDTOs.stream()
                 .map(CartRequest.UpdateDTO::getCartId)
                 .collect(Collectors.toList());
 
-        checkDuplication(requestOptionIds);
+        checkDuplication(requestCartIds);
 
         // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
         List<Integer> cartIds = cartList.stream()
@@ -105,7 +105,7 @@ public class CartService {
 
     private void checkDuplication(List<?> list) {
         if (list.size() != list.stream().distinct().count()) {
-            throw new Exception400("동일한 옵션이 여러개 들어올 수 없습니다.");
+            throw new Exception400("동일한 요청이 여러개 들어올 수 없습니다.");
         }
     }
 }
