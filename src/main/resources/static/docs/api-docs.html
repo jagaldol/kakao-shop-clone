@@ -457,15 +457,39 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_회원">회원</a>
 <ul class="sectlevel2">
+<li><a href="#_이메일_중복_확인">이메일 중복 확인</a></li>
+<li><a href="#_이메일_중복_확인_이미_존재하는_이메일인_경우">이메일 중복 확인 - 이미 존재하는 이메일인 경우</a></li>
 <li><a href="#_회원가입">회원가입</a></li>
+<li><a href="#_회원가입_2">회원가입</a></li>
+<li><a href="#_회원가입_올바르지_않은_양식">회원가입 - 올바르지 않은 양식</a></li>
+<li><a href="#_회원가입_이미_존재하는_이메일">회원가입 - 이미 존재하는 이메일</a></li>
 <li><a href="#_로그인">로그인</a></li>
+<li><a href="#_로그인_올바르지_않은_양식">로그인 - 올바르지 않은 양식</a></li>
+<li><a href="#_로그인_실패">로그인 - 실패</a></li>
 </ul>
 </li>
 <li><a href="#_장바구니">장바구니</a>
 <ul class="sectlevel2">
 <li><a href="#_장바구니_담기">장바구니 담기</a></li>
+<li><a href="#_장바구니_담기_올바르지_않은_양식">장바구니 담기 - 올바르지 않은 양식</a></li>
+<li><a href="#_장바구니_담기_중복된_옵션">장바구니 담기 - 중복된 옵션</a></li>
+<li><a href="#_장바구니_담기_존재하지_않는_옵션">장바구니 담기 - 존재하지 않는 옵션</a></li>
 <li><a href="#_장바구니_조회">장바구니 조회</a></li>
+<li><a href="#_장바구니_조회_로그인_안했을_시">장바구니 조회 - 로그인 안했을 시</a></li>
 <li><a href="#_장바구니_수정">장바구니 수정</a></li>
+<li><a href="#_장바구니_수정_올바르지_않은_양식">장바구니 수정 - 올바르지 않은 양식</a></li>
+<li><a href="#_장바구니_수정_장바구니가_비어_있을_때">장바구니 수정 - 장바구니가 비어 있을 때</a></li>
+<li><a href="#_장바구니_수정_중복된_장바구니_번호">장바구니 수정 - 중복된 장바구니 번호</a></li>
+<li><a href="#_장바구니_수정_유저가_가지고_있지_않은_장바구니_번호_요청">장바구니 수정 - 유저가 가지고 있지 않은 장바구니 번호 요청</a></li>
+</ul>
+</li>
+<li><a href="#_주문">주문</a>
+<ul class="sectlevel2">
+<li><a href="#_주문하기">주문하기</a></li>
+<li><a href="#_주문하기_장바구니가_비어_있을_시">주문하기 - 장바구니가 비어 있을 시</a></li>
+<li><a href="#_주문_결과_확인">주문 결과 확인</a></li>
+<li><a href="#_주문_결과_확인_존재_하지_않는_주문_번호">주문 결과 확인 - 존재 하지 않는 주문 번호</a></li>
+<li><a href="#_주문_결과_확인_다른_회원의_주문_번호_접근_시">주문 결과 확인 - 다른 회원의 주문 번호 접근 시</a></li>
 </ul>
 </li>
 </ul>
@@ -514,11 +538,7 @@ Host: localhost:8080</code></pre>
 <h4 id="_응답_예시">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-Content-Length: 1861
-
-{
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "success" : true,
   "response" : [ {
     "id" : 1,
@@ -596,11 +616,7 @@ Host: localhost:8080</code></pre>
 <h4 id="_응답_예시_2">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-Content-Length: 915
-
-{
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "success" : true,
   "response" : {
     "id" : 1,
@@ -655,11 +671,7 @@ Host: localhost:8080</code></pre>
 <h4 id="_응답_예시_3">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 404 Not Found
-Content-Type: application/json;charset=UTF-8
-Content-Length: 153
-
-{
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "success" : false,
   "response" : null,
   "error" : {
@@ -677,9 +689,72 @@ Content-Length: 153
 <h2 id="_회원">회원</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_회원가입">회원가입</h3>
+<h3 id="_이메일_중복_확인">이메일 중복 확인</h3>
 <div class="sect3">
 <h4 id="_요청_예시_4">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /check HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 33
+Host: localhost:8080
+
+{
+  "email" : "test@test.com"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_4">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : true,
+  "response" : null,
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_이메일_중복_확인_이미_존재하는_이메일인_경우">이메일 중복 확인 - 이미 존재하는 이메일인 경우</h3>
+<div class="sect3">
+<h4 id="_요청_예시_5">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /check HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 38
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_5">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 이메일이 존재합니다 : ssarmango@nate.com",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_회원가입">회원가입</h3>
+<div class="sect3">
+<h4 id="_요청_예시_6">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /join HTTP/1.1
@@ -696,14 +771,10 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_4">응답 예시</h4>
+<h4 id="_응답_예시_6">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-Content-Length: 65
-
-{
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "success" : true,
   "response" : null,
   "error" : null
@@ -713,9 +784,147 @@ Content-Length: 65
 </div>
 </div>
 <div class="sect2">
+<h3 id="_회원가입_2">회원가입</h3>
+<div class="sect3">
+<h4 id="_요청_예시_7">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /join HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 91
+Host: localhost:8080
+
+{
+  "email" : "test@test.com",
+  "password" : "test1234!",
+  "username" : "test_test"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_7">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : true,
+  "response" : null,
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_회원가입_올바르지_않은_양식">회원가입 - 올바르지 않은 양식</h3>
+<div class="paragraph">
+<p>status 400으로 잘못된 내용은 에러메시지에 작성되어 돌아온다.</p>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_8">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /join HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 82
+Host: localhost:8080
+
+{
+  "email" : "test",
+  "password" : "test1234!",
+  "username" : "test_test"
+}</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_email">email</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>이메일 형식(정규식: ^<span class="\w._%+-">@[\w.-]</span>\.[a-zA-Z]{2,6}$)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_password">password</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>8자 ~ 20자</p>
+</li>
+<li>
+<p>영문, 숫자, 특수문자가 포함되어하고 공백이 포함되서는 안된다.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_username">username</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>8자 ~ 45자</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_8">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일 형식으로 작성해주세요:email",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_회원가입_이미_존재하는_이메일">회원가입 - 이미 존재하는 이메일</h3>
+<div class="sect3">
+<h4 id="_요청_예시_9">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /join HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 96
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "test1234!",
+  "username" : "test_test"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_9">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 이메일이 존재합니다 : ssarmango@nate.com",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_로그인">로그인</h3>
 <div class="sect3">
-<h4 id="_요청_예시_5">요청 예시</h4>
+<h4 id="_요청_예시_10">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /login HTTP/1.1
@@ -731,18 +940,151 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_5">응답 예시</h4>
+<h4 id="_응답_예시_10">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FybWFuZ29AbmF0ZS5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWQiOjEsImV4cCI6MTY5MTExMTQ2M30.WvzXZ73n0Dp-vqPC_CmI3Xt3scqp6p8mFQcAqIKx0eVqB8M20nSG_x6W12BMVreCdum_pIx5f3nYDf4uj7qY7g
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FybWFuZ29AbmF0ZS5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWQiOjEsImV4cCI6MTY5MTIwNDUyN30.-w0MvysHdE669Zad5cTl8GDGCczLmj0IhVnImTML9jDSrGFasqgaCjdCmL-Q44wS5wKqIiU4UPOGheQhqk6DRg
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: SAMEORIGIN
 Content-Length: 65
 
 {
   "success" : true,
   "response" : null,
   "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_로그인_올바르지_않은_양식">로그인 - 올바르지 않은 양식</h3>
+<div class="sect3">
+<h4 id="_요청_예시_11">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 66
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "meta1234"
+}</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_email_2">email</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>이메일 형식(정규식: ^<span class="\w._%+-">@[\w.-]</span>\.[a-zA-Z]{2,6}$)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_password_2">password</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>8자 ~ 20자</p>
+</li>
+<li>
+<p>영문, 숫자, 특수문자가 포함되어하고 공백이 포함되서는 안된다.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_11">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_로그인_실패">로그인 - 실패</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>email 없을 시 : "이메일을 찾을 수 없습니다"</p>
+</li>
+<li>
+<p>password 검증 실패 시 : "패스워드가 잘못입력되었습니다"</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_12">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 68
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "meta1234!!"
+}</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_email_3">email</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>이메일 형식(정규식: ^<span class="\w._%+-">@[\w.-]</span>\.[a-zA-Z]{2,6}$)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_password_3">password</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>8자 ~ 20자</p>
+</li>
+<li>
+<p>영문, 숫자, 특수문자가 포함되어하고 공백이 포함되서는 안된다.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_12">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "패스워드가 잘못입력되었습니다",
+    "status" : 400
+  }
 }</code></pre>
 </div>
 </div>
@@ -755,8 +1097,11 @@ Content-Length: 65
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_장바구니_담기">장바구니 담기</h3>
+<div class="paragraph">
+<p>장바구니에 담을 옵션과 양을 전달</p>
+</div>
 <div class="sect3">
-<h4 id="_요청_예시_6">요청 예시</h4>
+<h4 id="_요청_예시_13">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /carts/add HTTP/1.1
@@ -772,14 +1117,10 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_6">응답 예시</h4>
+<h4 id="_응답_예시_13">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-Content-Length: 65
-
-{
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "success" : true,
   "response" : null,
   "error" : null
@@ -789,9 +1130,123 @@ Content-Length: 65
 </div>
 </div>
 <div class="sect2">
+<h3 id="_장바구니_담기_올바르지_않은_양식">장바구니 담기 - 올바르지 않은 양식</h3>
+<div class="paragraph">
+<p>옵션의 크기는 1 이상이여야한다.</p>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_14">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /carts/add HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 46
+Host: localhost:8080
+
+[ {
+  "optionId" : 3,
+  "quantity" : -5
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_14">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "수량은 양수여야합니다.:list[0].quantity",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_장바구니_담기_중복된_옵션">장바구니 담기 - 중복된 옵션</h3>
+<div class="paragraph">
+<p>동일한 옵션이 여러개 들어와서는 안된다.</p>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_15">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /carts/add HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 88
+Host: localhost:8080
+
+[ {
+  "optionId" : 3,
+  "quantity" : 5
+}, {
+  "optionId" : 3,
+  "quantity" : 5
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_15">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 요청이 여러개 들어올 수 없습니다.",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_장바구니_담기_존재하지_않는_옵션">장바구니 담기 - 존재하지 않는 옵션</h3>
+<div class="paragraph">
+<p>존재하지 않는 옵션을 담을 수 없다.</p>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_16">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /carts/add HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 47
+Host: localhost:8080
+
+[ {
+  "optionId" : 100,
+  "quantity" : 5
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_16">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "해당 옵션을 찾을 수 없습니다 : 100",
+    "status" : 404
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_장바구니_조회">장바구니 조회</h3>
 <div class="sect3">
-<h4 id="_요청_예시_7">요청 예시</h4>
+<h4 id="_요청_예시_17">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /carts HTTP/1.1
@@ -800,14 +1255,10 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_7">응답 예시</h4>
+<h4 id="_응답_예시_17">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-Content-Length: 1172
-
-{
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "success" : true,
   "response" : {
     "products" : [ {
@@ -855,6 +1306,36 @@ Content-Length: 1172
 </div>
 </div>
 <div class="sect2">
+<h3 id="_장바구니_조회_로그인_안했을_시">장바구니 조회 - 로그인 안했을 시</h3>
+<div class="paragraph">
+<p>장바구니(/carts/**) API는 기본적으로 전부 로그인을 요구한다.</p>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_18">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /carts HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_18">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "인증되지 않았습니다",
+    "status" : 401
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_장바구니_수정">장바구니 수정</h3>
 <div class="ulist">
 <ul>
@@ -867,7 +1348,7 @@ Content-Length: 1172
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_요청_예시_8">요청 예시</h4>
+<h4 id="_요청_예시_19">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /carts/update HTTP/1.1
@@ -883,14 +1364,10 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_8">응답 예시</h4>
+<h4 id="_응답_예시_19">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-Content-Length: 648
-
-{
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "success" : true,
   "response" : {
     "carts" : [ {
@@ -920,13 +1397,357 @@ Content-Length: 648
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_장바구니_수정_올바르지_않은_양식">장바구니 수정 - 올바르지 않은 양식</h3>
+<div class="paragraph">
+<p>옵션의 크기는 1 이상이여야한다.</p>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_20">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /carts/update HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 45
+Host: localhost:8080
+
+[ {
+  "cartId" : 1,
+  "quantity" : -10
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_20">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "수량은 양수여야합니다.:list[0].quantity",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_장바구니_수정_장바구니가_비어_있을_때">장바구니 수정 - 장바구니가 비어 있을 때</h3>
+<div class="paragraph">
+<p>회원의 장바구니가 비어 있을 경우, 수정 할 수 있는게 존재 하지 않아 api를 사용할 수 없다.</p>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_21">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /carts/update HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 44
+Host: localhost:8080
+
+[ {
+  "cartId" : 1,
+  "quantity" : 10
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_21">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "사용자의 장바구니가 존재하지 않습니다.",
+    "status" : 404
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_장바구니_수정_중복된_장바구니_번호">장바구니 수정 - 중복된 장바구니 번호</h3>
+<div class="paragraph">
+<p>동일한 옵션이 여러개 들어와서는 안된다.</p>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_22">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /carts/update HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 86
+Host: localhost:8080
+
+[ {
+  "cartId" : 1,
+  "quantity" : 10
+}, {
+  "cartId" : 1,
+  "quantity" : 10
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_22">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 요청이 여러개 들어올 수 없습니다.",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_장바구니_수정_유저가_가지고_있지_않은_장바구니_번호_요청">장바구니 수정 - 유저가 가지고 있지 않은 장바구니 번호 요청</h3>
+<div class="paragraph">
+<p>가지고 있는 장바구니만을 수정할 수 있다.</p>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_23">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /carts/update HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 46
+Host: localhost:8080
+
+[ {
+  "cartId" : 100,
+  "quantity" : 10
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_23">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "장바구니 번호가 잘못되었습니다.:100",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_주문">주문</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_주문하기">주문하기</h3>
+<div class="paragraph">
+<p>장바구니에 존재하는 옵션들을 주문 데이터로 바꾸고 장바구니를 비운다.</p>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_24">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /orders/save HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_24">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : true,
+  "response" : {
+    "id" : 2,
+    "products" : [ {
+      "productName" : "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+      "items" : [ {
+        "id" : 4,
+        "optionName" : "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+        "quantity" : 5,
+        "price" : 50000
+      }, {
+        "id" : 5,
+        "optionName" : "02. 슬라이딩 지퍼백 플라워에디션 5종",
+        "quantity" : 1,
+        "price" : 10900
+      } ]
+    }, {
+      "productName" : "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
+      "items" : [ {
+        "id" : 6,
+        "optionName" : "선택02_바른곡물효소누룽지맛 6박스",
+        "quantity" : 5,
+        "price" : 250000
+      } ]
+    } ],
+    "totalPrice" : 310900
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_주문하기_장바구니가_비어_있을_시">주문하기 - 장바구니가 비어 있을 시</h3>
+<div class="paragraph">
+<p>주문할 상품 정보인 장바구니가 존재하지 않으면 주문할 수 가 없다.</p>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_25">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /orders/save HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_25">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "사용자의 장바구니가 존재하지 않습니다.",
+    "status" : 404
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_주문_결과_확인">주문 결과 확인</h3>
+<div class="sect3">
+<h4 id="_요청_예시_26">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /orders/1 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_26">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : true,
+  "response" : {
+    "id" : 1,
+    "products" : [ {
+      "productName" : "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+      "items" : [ {
+        "id" : 1,
+        "optionName" : "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+        "quantity" : 5,
+        "price" : 50000
+      }, {
+        "id" : 2,
+        "optionName" : "02. 슬라이딩 지퍼백 플라워에디션 5종",
+        "quantity" : 1,
+        "price" : 10900
+      } ]
+    }, {
+      "productName" : "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
+      "items" : [ {
+        "id" : 3,
+        "optionName" : "선택02_바른곡물효소누룽지맛 6박스",
+        "quantity" : 5,
+        "price" : 250000
+      } ]
+    } ],
+    "totalPrice" : 310900
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_주문_결과_확인_존재_하지_않는_주문_번호">주문 결과 확인 - 존재 하지 않는 주문 번호</h3>
+<div class="sect3">
+<h4 id="_요청_예시_27">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /orders/3 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_27">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "존재하지 않는 주문입니다.",
+    "status" : 404
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_주문_결과_확인_다른_회원의_주문_번호_접근_시">주문 결과 확인 - 다른 회원의 주문 번호 접근 시</h3>
+<div class="paragraph">
+<p>각 회원의 주문 정보는 회원 자신만 볼 수 있다.</p>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_28">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /orders/1 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_28">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "허용되지 않은 접근입니다.",
+    "status" : 403
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2023-08-01 22:36:07 +0900
+Last updated 2023-08-03 11:58:33 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
