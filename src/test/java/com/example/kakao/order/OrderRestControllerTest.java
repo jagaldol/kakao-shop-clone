@@ -47,9 +47,28 @@ public class OrderRestControllerTest extends MyRestDocTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(310900));
     }
 
+    @WithUserDetails(value = "ssar@nate.com")
+    @Test
+    void save_not_found_test() throws Exception {
+        // given
+
+        // when
+
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/orders/save")
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+        result.andDo(MockMvcResultHandlers.print());
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(404));
+    }
+
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test
-    void  findById_test() throws Exception {
+    void  find_by_id_test() throws Exception {
         // given
         int orderId = 1;
 
@@ -72,5 +91,43 @@ public class OrderRestControllerTest extends MyRestDocTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].quantity").value(1));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(310900));
+    }
+
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    void find_by_id_not_found_test() throws Exception {
+        // given
+        int orderId = 3;
+        // when
+
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/orders/" + orderId)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+        result.andDo(MockMvcResultHandlers.print());
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(404));
+    }
+
+    @WithUserDetails(value = "ssar@nate.com")
+    @Test
+    void find_by_id_forbidden_test() throws Exception {
+        // given
+        int orderId = 1;
+        // when
+
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/orders/" + orderId)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+        result.andDo(MockMvcResultHandlers.print());
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(403));
     }
 }
