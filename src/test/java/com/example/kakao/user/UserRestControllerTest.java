@@ -32,6 +32,51 @@ public class UserRestControllerTest extends MyRestDocTest {
     private ObjectMapper om;
 
     @Test
+    public void email_check_test() throws Exception {
+        // given
+        UserRequest.EmailCheckDTO requestDTO = new UserRequest.EmailCheckDTO();
+        requestDTO.setEmail("test@test.com");
+        String requestBody = om.writeValueAsString(requestDTO);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/check")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+    }
+
+    @Test
+    public void email_check_fail_test() throws Exception {
+        // given
+        UserRequest.EmailCheckDTO requestDTO = new UserRequest.EmailCheckDTO();
+        requestDTO.setEmail("ssarmango@nate.com");
+        String requestBody = om.writeValueAsString(requestDTO);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/check")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(400));
+    }
+
+    @Test
     public void join_test() throws Exception {
         // given
         UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
